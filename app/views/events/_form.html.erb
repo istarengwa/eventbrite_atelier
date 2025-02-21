@@ -1,42 +1,77 @@
-<%= form_with(model: event) do |form| %>
-  <% if event.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h3>Créer un événement</h3>
+        </div>
+        <div class="card-body">
+          <%= form_with(model: event, class: "needs-validation") do |form| %>
 
-      <ul>
-        <% event.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+            <% if event.errors.any? %>
+              <div class="alert alert-danger">
+                <h4><%= pluralize(event.errors.count, "erreur") %> empêchent cet événement d'être enregistré :</h4>
+                <ul>
+                  <% event.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <!-- Titre -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <%= form.label :title, class: "form-label fw-bold" %>
+                <%= form.text_field :title, class: "form-control", placeholder: "Titre de l'événement" %>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <%= form.label :description, class: "form-label fw-bold" %>
+                <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Description de l'événement" %>
+              </div>
+            </div>
+
+            <!-- Durée -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <%= form.label :duration, class: "form-label fw-bold" %>
+                <%= form.number_field :duration, class: "form-control", min: 1, placeholder: "Durée en minutes" %>
+              </div>
+            </div>
+
+            <!-- Date de début -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <%= form.label :start_date, class: "form-label fw-bold" %>
+                <%= form.datetime_field :start_date, class: "form-control" %>
+              </div>
+            </div>
+
+            <!-- Prix -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <%= form.label :price, class: "form-label fw-bold" %>
+                <%= form.number_field :price, class: "form-control", min: 0, step: "0.01", placeholder: "Prix en €" %>
+              </div>
+            </div>
+
+            <!-- Bouton de soumission -->
+            <div class="text-center">
+              <div class="card">
+                <div class="card-body">
+                  <%= form.submit "Créer l'événement", class: "btn btn-success w-100" %>
+                </div>
+              </div>
+            </div>
+
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
   </div>
+</div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-
-  <div>
-    <%= form.label :duration, style: "display: block" %>
-    <%= form.number_field :duration %>
-  </div>
-
-  <div>
-    <%= form.label :start_date, style: "display: block" %>
-    <%= form.datetime_field :start_date %>
-  </div>
-
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>

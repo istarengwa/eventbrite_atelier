@@ -8,9 +8,11 @@
       Voici ton email : <%= current_user.email %>
     </li>
 
-    <li>
-        <%= link_to "New event", new_event_path %>
-    </li>
+    <% if current_user.is_admin? %>
+        <li>
+            <%= link_to "New event", new_event_path %>
+        </li>
+    <% end %>
 
     <li>
       <%= link_to "Edit email / password", edit_user_registration_path %>

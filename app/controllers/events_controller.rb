@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :require_admin, only: %i[edit create new destroy]
+
 
   # GET /events or /events.json
   def index
@@ -66,5 +68,9 @@ class EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       params.expect(event: [ :title, :description, :duration, :start_date, :price ])
+    end
+
+    def require_admin
+      redirect_to root_path, alert: "Accès réservé aux administrateurs." unless current_user.is_admin?
     end
 end
